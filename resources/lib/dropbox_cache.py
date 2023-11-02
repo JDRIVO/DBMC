@@ -4,6 +4,11 @@ import shutil
 import datetime
 import threading
 
+try:
+    import StorageServer
+except:
+    from . import storage_server_dummy as StorageServer
+
 from dropbox.files import (
     DeletedMetadata,
     FileMetadata,
@@ -15,11 +20,6 @@ from dropbox.files import (
 
 from .utils import *
 from .constants import *
-
-try:
-    import StorageServer
-except:
-    from . import storage_server_dummy as StorageServer
 
 
 class DropboxCache(StorageServer.StorageServer):
