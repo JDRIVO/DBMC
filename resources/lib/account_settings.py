@@ -91,5 +91,5 @@ class AccountSettings:
         shutil.rmtree(get_cache_path(self.account_name))
         from .dropbox_cache import DropboxCache
         cache = DropboxCache(self.account_name)
-        cache.delete(self.account_name)
+        cache.delete()
         # Remove synced data is done in the DropboxSynchronizer

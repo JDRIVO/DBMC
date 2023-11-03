@@ -168,10 +168,9 @@ class DropboxViewer:
         xbmcplugin.addDirectoryItem(HANDLE, url, list_item, isFolder=True)
 
     def add_file(self, path, metadata, media_type):
-        icon_image = ICONS[media_type]
         filename = metadata.name
         list_item = xbmcgui.ListItem(filename)
-        list_item.setArt({"icon": icon_image})
+        list_item.setArt({"icon": ICONS[media_type]})
         list_item.setDateTime(metadata.server_modified.strftime("%Y-%m-%d %H:%M:%S"))
         list_item.setInfo(TYPES[media_type], {"size": metadata.size})
 
@@ -179,10 +178,7 @@ class DropboxViewer:
             # Use the synchronized location for url
             url = get_local_sync_path(self._local_sync_path, self._remote_sync_path, path)
         elif media_type in ("image", "video", "audio"):
-            thumb = self._loader.get_thumbnail(path)
-
-            if thumb:
-                list_item.setArt({"thumb": thumb})
+            list_item.setArt({"thumb": self._loader.get_thumbnail(path)})
 
             if self._use_steaming_urls and media_type in ("video", "audio"):
                 # This doesn't work for pictures
@@ -239,5 +235,4 @@ class DropboxViewer:
         if extra:
             url += f"&{extra}"
 
-        url += ")"
-        return url
+        return url + ")"

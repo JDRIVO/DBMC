@@ -91,7 +91,6 @@ class KodiDropboxClient:
         self._refresh_token = refresh_token
         self._app_key = app_key
         self._app_secret = app_secret
-        self._account_name = account_name
 
         if cache:
             self._cache = cache
@@ -146,7 +145,7 @@ class KodiDropboxClient:
         # Make the cache_name unique to the account (using the access_token).
         # To prevents that different accounts, which have the same directories, don't
         # use the same cache
-        cached_data = self._cache.get(self._account_name)
+        cached_data = self._cache.get()
         cached_metadata = cached_data["metadata"].get(path, {})
 
         if cached_metadata:
@@ -202,7 +201,7 @@ class KodiDropboxClient:
 
         margin = 13800 # Seconds - link valid for 4 hours
         link = None
-        cached_data = self._cache.get(self._account_name)
+        cached_data = self._cache.get()
         cached_links = cached_data["links"]
         cached_link = cached_links.get(path)
 

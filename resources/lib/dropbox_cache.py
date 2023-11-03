@@ -26,11 +26,11 @@ class DropboxCache(StorageServer.StorageServer):
 
     def __init__(self, account_name):
         super().__init__(ADDON_NAME)
+        self._cache_name = account_name
         cache_path = get_cache_path(account_name)
         self._shadow_path = f"{cache_path}/shadow/"
         self._thumb_path = f"{cache_path}/thumb/"
         self._data = None
-        self._cache_name = None
         self._stop_event = threading.Event()
 
     def stop(self):
@@ -39,9 +39,20 @@ class DropboxCache(StorageServer.StorageServer):
     def stopped(self):
         return self._stop_event.is_set()
 
-    def get(self, account_name):
-        self._cache_name = account_name
-        self._data = super().get(account_name)
+    def delete(self):
+        super().delete(self._cache_name)
+
+    def save(self, data=None):
+
+        if data is None:
+            data = self._data
+        else:
+            self._data = data
+
+        super().set(self._cache_name, repr(data))
+
+    def get(self):
+        self._data = super().get(self._cache_name)
 
         if self._data:
             self._data = eval(self._data)
@@ -52,15 +63,6 @@ class DropboxCache(StorageServer.StorageServer):
             }
 
         return self._data
-
-    def save(self, data=None):
-
-        if data is None:
-            data = self._data
-        else:
-            self._data = data
-
-        super().set(self._cache_name, repr(data))
 
     @staticmethod
     def identify_file_type(metadata):

@@ -57,7 +57,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             access_token = flow_result.access_token
             account_info = KodiDropboxClient(access_token=access_token).get_account_info()
             name_info = account_info.name
-            account_name = None
+            account_name = "Account"
 
             if name_info:
                 diplay_name = name_info.display_name
@@ -65,18 +65,14 @@ class RequestHandler(BaseHTTPRequestHandler):
                 if diplay_name:
                     account_name = diplay_name
 
-            if not account_name:
-                count = 1
-                account_present = True
+            new_account = AccountSettings(account_name)
+            account_present = new_account.app_key
+            count = 1
 
-                while account_present:
-                    account_name = f"Account {count}"
-                    new_account = AccountSettings(account_name)
-                    account_present = new_account.app_key
-                    count += 1
-
-            else:
-                new_account = AccountSettings(account_name)
+            while account_present:
+                new_account = AccountSettings(f"{account_name} ({count})")
+                account_present = new_account.app_key
+                count += 1
 
             new_account.refresh_token = flow_result.refresh_token
             new_account.access_token = access_token
