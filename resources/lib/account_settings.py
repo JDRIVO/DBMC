@@ -26,6 +26,7 @@ import shutil
 import xbmcvfs
 
 from .utils import *
+from .dropbox_cache import DropboxCache
 
 
 class AccountSettings:
@@ -89,7 +90,5 @@ class AccountSettings:
         log_debug(f"Remove account folder: {self.account_dir}")
         shutil.rmtree(self.account_dir)
         shutil.rmtree(get_cache_path(self.account_name))
-        from .dropbox_cache import DropboxCache
-        cache = DropboxCache(self.account_name)
-        cache.delete()
+        DropboxCache(self.account_name).delete()
         # Remove synced data is done in the DropboxSynchronizer

@@ -59,8 +59,8 @@ class SyncAccount:
         self._storage_file = None
         self._client_cursor = None
         self._enabled = False
-        self.sync_semaphore = threading.Semaphore()
         self._sync_requests = []
+        self.sync_semaphore = threading.Semaphore()
 
     def init(self):
         # Get sync settings
@@ -130,11 +130,11 @@ class SyncAccount:
     def _get_settings(self):
         account = AccountSettings(self.account_name)
         self._storage_file = os.path.normpath(f"{account.account_dir}/sync_data.pik")
-        got_semaphore = True
         enable = account.synchronisation
         temp_path = account.sync_path
         temp_remote_path = account.remote_path
         temp_freq = float(account.sync_freq)
+        got_semaphore = True
 
         # The following settings can't be changed while syncing
         if not self.sync_semaphore.acquire(False):

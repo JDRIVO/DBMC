@@ -85,33 +85,6 @@ def run():
                         else:
                             log_error(f"File delete failed: {path}")
 
-            elif action == "copy":
-
-                if "path" in params:
-                    path = params["path"]
-                    dialog = DropboxFileBrowser("FileBrowser.xml", ADDON_PATH)
-                    dialog.set_db_client(client)
-                    dialog.set_heading(LANGUAGE_STRING(30025) + LANGUAGE_STRING(30026))
-                    dialog.doModal()
-
-                    if dialog.selected_folder:
-                        # Dropbox path -> don't use os.path.join()
-                        to_path = dialog.selected_folder
-
-                        if dialog.selected_folder[-1:] != DROPBOX_SEP:
-                            to_path += DROPBOX_SEP
-
-                        to_path += os.path.basename(path)
-                        copied = client.copy(path, to_path)
-
-                        if copied:
-                            log(f"File copied: {path} to {to_path}")
-                            NotifySyncClient().sync_path(account_settings, to_path)
-                        else:
-                            log_error(f"File copy failed: {path} to {to_path}")
-
-                    del dialog
-
             elif action == "rename":
 
                 if "path" in params:
@@ -168,6 +141,33 @@ def run():
                             NotifySyncClient().sync_path(account_settings, to_path)
                         else:
                             log_error(f"File move failed: from {path} to {to_path}")
+
+                    del dialog
+
+            elif action == "copy":
+
+                if "path" in params:
+                    path = params["path"]
+                    dialog = DropboxFileBrowser("FileBrowser.xml", ADDON_PATH)
+                    dialog.set_db_client(client)
+                    dialog.set_heading(LANGUAGE_STRING(30025) + LANGUAGE_STRING(30026))
+                    dialog.doModal()
+
+                    if dialog.selected_folder:
+                        # Dropbox path -> don't use os.path.join()
+                        to_path = dialog.selected_folder
+
+                        if dialog.selected_folder[-1:] != DROPBOX_SEP:
+                            to_path += DROPBOX_SEP
+
+                        to_path += os.path.basename(path)
+                        copied = client.copy(path, to_path)
+
+                        if copied:
+                            log(f"File copied: {path} to {to_path}")
+                            NotifySyncClient().sync_path(account_settings, to_path)
+                        else:
+                            log_error(f"File copy failed: {path} to {to_path}")
 
                     del dialog
 

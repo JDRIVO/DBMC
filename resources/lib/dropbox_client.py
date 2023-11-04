@@ -199,8 +199,8 @@ class KodiDropboxClient:
         request a new one yet.
         """
 
-        margin = 13800 # Seconds - link valid for 4 hours
         link = None
+        margin = 13800 # Seconds - link valid for 4 hours
         cached_data = self._cache.get()
         cached_links = cached_data["links"]
         cached_link = cached_links.get(path)
