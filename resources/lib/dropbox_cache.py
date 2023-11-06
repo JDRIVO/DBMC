@@ -52,10 +52,10 @@ class DropboxCache(StorageServer.StorageServer):
         super().set(self._cache_name, repr(data))
 
     def get(self):
-        self._data = super().get(self._cache_name)
+        data = super().get(self._cache_name)
 
-        if self._data:
-            self._data = eval(self._data)
+        if data:
+            self._data = eval(data)
         else:
             self._data = {
                 "links": {},
