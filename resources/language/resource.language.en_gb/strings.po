@@ -45,7 +45,7 @@ msgid ""
 msgstr ""
 
 msgctxt "#30010"
-msgid "Load more"
+msgid ""
 msgstr ""
 
 msgctxt "#30011"

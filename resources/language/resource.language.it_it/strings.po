@@ -54,8 +54,8 @@ msgid ""
 msgstr ""
 
 msgctxt "#30010"
-msgid "Load more"
-msgstr "Carica altro"
+msgid ""
+msgstr ""
 
 msgctxt "#30011"
 msgid "Use passcode lock for account"

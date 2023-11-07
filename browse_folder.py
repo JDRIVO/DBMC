@@ -38,8 +38,8 @@ class FolderBrowser(DropboxViewer):
     def show(self):
         super().show(cache_to_disc=False)
 
-    def get_url(self, path, media_items=0, module=None):
-        return super().get_url(path, media_items, module)
+    def get_url(self, path, module=None):
+        return super().get_url(path, module)
 
 
 def run(params):

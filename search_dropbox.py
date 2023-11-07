@@ -48,8 +48,8 @@ class DropboxSearch(DropboxViewer):
             xbmcgui.Dialog().ok(ADDON_NAME, LANGUAGE_STRING(30021))
             super().show(succeeded=False)
 
-    def get_url(self, path, media_items=0, module=None):
-        url = super().get_url(path, media_items, module)
+    def get_url(self, path, module=None):
+        url = super().get_url(path, module)
         url += f"&search_text={self._search_text}"
         return url
 

@@ -209,7 +209,7 @@ class DropboxViewer:
         list_item.addContextMenuItems(context_menu_items)
         xbmcplugin.addDirectoryItem(HANDLE, url, list_item, isFolder=False)
 
-    def get_url(self, path, media_items=0, module=None):
+    def get_url(self, path, module=None):
         url = f"{ADDON_URL}?content_type={self._content_type}"
 
         if module:
@@ -217,12 +217,7 @@ class DropboxViewer:
         else:
             url += f"&module={self._module}"
 
-        url += f"&account={self._account_name}&path={path}"
-
-        if media_items != 0:
-            url += f"&media_items={media_items}"
-
-        return url
+        return url + f"&account={self._account_name}&path={path}"
 
     def get_context_url(self, path, action, extra=None):
         url = f"RunPlugin({ADDON_URL}?action={action}&account={self._account_name}"
