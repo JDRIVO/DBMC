@@ -360,7 +360,8 @@ class KodiDropboxClient:
 
 
 class ChunkedUploader:
-    """Contains the logic around a chunked upload, which uploads a
+    """
+    Contains the logic around a chunked upload, which uploads a
     large file to Dropbox via the /chunked_upload endpoint.
     """
 
