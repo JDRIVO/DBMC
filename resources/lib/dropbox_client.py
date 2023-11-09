@@ -142,9 +142,6 @@ class KodiDropboxClient:
         if not directory:
             dir_name = os.path.dirname(path)
 
-        # Make the cache_name unique to the account (using the access_token).
-        # To prevents that different accounts, which have the same directories, don't
-        # use the same cache
         cached_data = self._cache.get()
         cached_metadata = cached_data["metadata"].get(path, {})
 

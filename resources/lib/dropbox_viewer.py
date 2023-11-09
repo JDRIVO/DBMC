@@ -210,14 +210,14 @@ class DropboxViewer:
         xbmcplugin.addDirectoryItem(HANDLE, url, list_item, isFolder=False)
 
     def get_url(self, path, module=None):
-        url = f"{ADDON_URL}?content_type={self._content_type}"
+        url = f"{ADDON_URL}?content_type={self._content_type}&account={self._account_name}&path={path}"
 
         if module:
             url += f"&module={module}"
         else:
             url += f"&module={self._module}"
 
-        return url + f"&account={self._account_name}&path={path}"
+        return url
 
     def get_context_url(self, path, action, extra=None):
         url = f"RunPlugin({ADDON_URL}?action={action}&account={self._account_name}"
