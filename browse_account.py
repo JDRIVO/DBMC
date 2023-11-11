@@ -233,12 +233,11 @@ def run(params):
                     log_error(f"Failed to remove the account: {e}")
                 else:
                     NotifySyncClient().account_added_removed()
+                    xbmc.executebuiltin("Container.Refresh")
 
         else:
             log_error("Failed to remove the account")
             xbmcgui.Dialog().ok(ADDON_NAME, LANGUAGE_STRING(30203))
-
-        xbmc.executebuiltin("Container.Refresh")
 
     elif action == "change_passcode":
         account_name = params.get("account", "")
@@ -247,16 +246,12 @@ def run(params):
         if account_settings:
             change_passcode(account_settings)
 
-        xbmcplugin.endOfDirectory(HANDLE, succeeded=False)
-
     elif action == "change_synchronization":
         account_name = params.get("account", "")
         account_settings = login.get_account(account_name)
 
         if account_settings:
             change_synchronization(account_settings)
-
-        xbmcplugin.endOfDirectory(HANDLE, succeeded=False)
 
     else:
         browser = AccountBrowser(params)

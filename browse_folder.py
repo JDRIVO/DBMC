@@ -51,5 +51,3 @@ def run(params):
         browser = FolderBrowser(params, account_settings)
         browser.build_list()
         browser.show()
-    else:
-        xbmcplugin.endOfDirectory(HANDLE, succeeded=False)

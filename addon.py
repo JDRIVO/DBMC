@@ -53,7 +53,6 @@ def run():
 
         if not account_settings:
             xbmcgui.Dialog().ok(ADDON_NAME, LANGUAGE_STRING(30203))
-            # xbmcplugin.endOfDirectory(HANDLE, succeeded=False)
             return
 
         # All actions below require a KodiDropboxClient
@@ -268,11 +267,10 @@ def run():
             xbmcplugin.setResolvedUrl(HANDLE, True, list_item)
         else:
             log_error("Action play: no account name provided")
-            xbmcplugin.endOfDirectory(HANDLE, succeeded=False)
 
     else:
         # No module chosen
-        # Run the browse_folder module
+        # Run the browse_account module
         module = "browse_account"
         params["module"] = module
         __import__(module)
