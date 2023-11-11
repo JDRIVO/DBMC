@@ -151,27 +151,35 @@ class KodiDropboxClient:
             cursor = None
 
         if directory or not cached_metadata:
+            has_more = True
+            entries = []
 
-            if cursor:
+            while has_more:
 
-                try:
-                    result = self.dropbox_api.files_list_folder_continue(cursor)
-                except dropbox.exceptions.ApiError as e:
-                    result = self.dropbox_api.files_list_folder("" if dir_name == "/" else dir_name)
+                if cursor:
+
+                    try:
+                        result = self.dropbox_api.files_list_folder_continue(cursor)
+                    except dropbox.exceptions.ApiError as e:
+                        # Cursor has expired
+                        result = self.dropbox_api.files_list_folder("" if dir_name == "/" else dir_name)
+
+                    else:
+
+                        if not result.entries and cached_metadata:
+                            return cached_metadata["entries"]
 
                 else:
+                    # Dropbox expects root path to be an empty string otherwise it will fail
+                    result = self.dropbox_api.files_list_folder("" if dir_name == "/" else dir_name)
 
-                    if not result.entries and cached_metadata:
-                        return cached_metadata["entries"]
+                cursor = result.cursor
+                has_more = result.has_more
+                entries += result.entries
 
-            else:
-                # Dropbox expects root path to be an empty string otherwise it will fail
-                result = self.dropbox_api.files_list_folder("" if dir_name == "/" else dir_name)
-
-            entries = result.entries
             metadata = self._cache.sort_metadata(entries, cached_metadata.get("entries"))
             cached_data["metadata"][dir_name] = {
-                "cursor": result.cursor,
+                "cursor": cursor,
                 "entries": metadata,
             }
             self._cache.save(cached_data)
@@ -344,6 +352,7 @@ class KodiDropboxClient:
             try:
                 result = self.dropbox_api.files_list_folder_continue(cursor)
             except dropbox.exceptions.ApiError as e:
+                # Cursor has expired
                 result = self.dropbox_api.files_list_folder("", recursive=True)
 
         else:
