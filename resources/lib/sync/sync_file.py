@@ -33,6 +33,8 @@ class SyncFile(SyncObject):
     def __init__( self, path, client):
         log_debug(f"Create SyncFile: {path}")
         super().__init__(path, client)
+        self._file_type = None
+        self.is_dir = False
 
     def in_sync(self):
 
@@ -95,10 +97,14 @@ class SyncFile(SyncObject):
 
         if self._state == self.OBJECT_TO_DOWNLOAD:
             log_debug(f"Download file to: {self._local_path}")
-            succeeded = self._client.save_file(self.path, self._local_path)
+            # succeeded = self._client.save_file(self.path, self._local_path)
 
-            if succeeded:
-                self.update_timestamp()
+            # if succeeded:
+                # self.update_timestamp()
+
+            # if self._file_type == "video":
+            self._client.save_strm(self._id, self._local_path)
+            self.update_timestamp()
 
         elif self._state == self.OBJECT_TO_UPLOAD:
             log_debug(f"Upload file: {self._local_path}")
@@ -137,6 +143,7 @@ class SyncFile(SyncObject):
         return succeeded
 
     def set_item_info(self, path, metadata):
+        self._file_type = identify_file_type(metadata.name)
 
         if path == self.path:
             super().set_item_info(metadata)

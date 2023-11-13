@@ -61,7 +61,7 @@ def run():
             account_settings.refresh_token,
             account_settings.app_key,
             account_settings.app_secret,
-            account_name=account_settings.account_name,
+            account_settings.account_name,
         )
         action = params.get("action", "")
 
@@ -243,6 +243,7 @@ def run():
         __import__(module)
         current_module = sys.modules[module]
         current_module.run(params)
+
     elif "action" in params and params["action"] == "play":
         account_name = params.get("account", "")
         account_settings = login.get_account(account_name)
@@ -253,17 +254,20 @@ def run():
                 account_settings.refresh_token,
                 account_settings.app_key,
                 account_settings.app_secret,
-                account_name=account_settings.account_name,
+                account_settings.account_name,
             )
-            filename = params["filename"]
+            filename = params.get("filename")
             path = params["path"]
             url = client.get_media_url(path)
             log_debug(f"Media URL: {url}")
             list_item = xbmcgui.ListItem()
             list_item.select(True)
             list_item.setPath(url)
-            video_info = list_item.getVideoInfoTag()
-            video_info.setTitle(filename)
+
+            if filename:
+                video_info = list_item.getVideoInfoTag()
+                video_info.setTitle(filename)
+
             xbmcplugin.setResolvedUrl(HANDLE, True, list_item)
         else:
             log_error("Action play: no account name provided")

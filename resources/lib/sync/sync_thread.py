@@ -79,11 +79,6 @@ class SynchronizeThread(threading.Thread):
             for metadata in items:
                 path = metadata.path_lower
 
-                if metadata.__class__.__name__ == "FolderMetadata":
-                    metadata.is_dir = True
-                else:
-                    metadata.is_dir = False
-
                 if not inital_sync:
                     log_debug(f"New item info received for {path}")
 

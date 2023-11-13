@@ -91,6 +91,7 @@ class KodiDropboxClient:
         self._refresh_token = refresh_token
         self._app_key = app_key
         self._app_secret = app_secret
+        self._account_name = account_name
 
         if cache:
             self._cache = cache
@@ -328,6 +329,19 @@ class KodiDropboxClient:
                     cache_file.write(thumbnail)
 
                 log_debug(f"Downloaded file to: {location}")
+
+    def save_strm(self, file_id, location):
+        # location = replace_file_extension(location, "strm")
+        content = f"plugin://plugin.dbmc/?action=play&account={self._account_name}&path={file_id}"
+        dir_name = os.path.dirname(location) + os.sep # Add os seperator because it is a dir
+
+        if not xbmcvfs.exists(dir_name):
+            xbmcvfs.mkdirs(dir_name)
+
+        with open(location, "w+") as strm:
+            strm.write(content)
+
+        log_debug(f"STRM saved to: {location}")
 
     @command(silent=True)
     def save_file(self, path, location):

@@ -167,7 +167,7 @@ def change_synchronization(account_settings):
                 account_settings.refresh_token,
                 account_settings.app_key,
                 account_settings.app_secret,
-                account_name=account_settings.account_name,
+                account_settings.account_name,
             )
             dialog.set_db_client(client)
             dialog.set_heading(LANGUAGE_STRING(30109), account_settings.remote_path)

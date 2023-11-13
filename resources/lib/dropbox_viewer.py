@@ -54,8 +54,8 @@ class DropboxViewer:
             self._account_settings.refresh_token,
             self._account_settings.app_key,
             self._account_settings.app_secret,
-            account_name=self._account_name,
-            cache=self._cache,
+            self._account_name,
+            self._cache,
         )
         self._filter_files = ADDON_SETTINGS.getBool("file_filter")
         self._use_steaming_urls = ADDON_SETTINGS.getBool("stream_media")

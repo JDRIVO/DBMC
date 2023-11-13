@@ -46,7 +46,9 @@ class SyncFolder(SyncObject):
             log_error(f"set_item_info() Item({path}) isn't part of the remote sync path ({self.path})")
         else:
             child = self.get_item(path, metadata)
-            child.set_item_info(path, metadata)
+
+            if child:
+                child.set_item_info(path, metadata)
 
     def update_remote_info(self, path, metadata):
 
@@ -56,7 +58,9 @@ class SyncFolder(SyncObject):
             log_error(f"update_remote_info() Item({path}) isn't part of the remote sync path ({self.path})")
         else:
             child = self.get_item(path, metadata)
-            child.update_remote_info(path, metadata)
+
+            if child:
+                child.update_remote_info(path, metadata)
 
     def get_items_info(self):
         metadata_list = {}
@@ -84,12 +88,17 @@ class SyncFolder(SyncObject):
         if not child_path in self._children:
 
             # Create the child
-            if metadata.is_dir:
+            if metadata.__class__.__name__ == "FolderMetadata":
                 child = SyncFolder(child_path, self._client)
             else:
-                child = SyncFile(child_path, self._client)
 
-            # Add the new created child to the childern's list
+                file_type = identify_file_type(child_path)
+
+                if file_type == "video":
+                    child = SyncFile(child_path, self._client)
+                else:
+                    return
+
             self._children[child_path] = child
 
         return self._children[child_path]

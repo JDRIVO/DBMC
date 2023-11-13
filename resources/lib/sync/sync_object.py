@@ -40,9 +40,9 @@ class SyncObject:
     def __init__(self, path, client):
         self.path = path
         self._client = client
+        self._id = None
         self._name = None
         self._local_path = None
-        self.is_dir = False
         self._failure = False
         self._remote_present = True
         self._local_timestamp = 0
@@ -53,6 +53,7 @@ class SyncObject:
 
     def set_item_info(self, metadata):
         log_debug(f"Set stored metadata: {self.path}")
+        self._id = metadata.id
         self._name = metadata.name
         self._remote_present = metadata.present
         self._remote_timestamp = metadata.server_modified
@@ -64,6 +65,7 @@ class SyncObject:
 
     def get_item_info(self):
         return Metadata(
+            self._id,
             self.path,
             self._name,
             self.is_dir,
@@ -86,7 +88,11 @@ class SyncObject:
             self._remote_client_modified_timestamp = time.mktime(metadata.client_modified.replace(tzinfo=timezone.utc).astimezone(tz=None).timetuple())
 
         self._remote_present = True
+        self._id = metadata.id
         self._name = metadata.name
+
+        if not self.is_dir:
+            self._name = replace_file_extension(self._name, "strm")
 
     def update_timestamp(self):
         # local modified time = client_mtime
@@ -109,6 +115,7 @@ class SyncObject:
 
 @dataclass
 class Metadata:
+    id: str
     path: str
     name: str
     is_dir: bool

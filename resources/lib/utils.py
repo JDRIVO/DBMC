@@ -6,6 +6,9 @@ import xbmc
 import xbmcvfs
 import xbmcaddon
 
+from .constants import *
+
+
 ADDON_ID        = "plugin.dbmc"
 ADDON_URL       = f"plugin://{ADDON_ID}/"
 ADDON           = xbmcaddon.Addon(ADDON_ID)
@@ -59,6 +62,11 @@ def get_cache_path(account_name):
     return os.path.normpath(f"{data_path}/{account_name}")
 
 
+def get_local_sync_path(local_sync_path, remote_sync_path, item_path):
+    item_path = item_path.replace(remote_sync_path, "", 1)
+    return os.path.normpath(local_sync_path + DROPBOX_SEP + item_path)
+
+
 def replace_file_extension(path, file_extension):
     file_extension = "." + file_extension
 
@@ -70,9 +78,17 @@ def replace_file_extension(path, file_extension):
         return new_path + file_extension
 
 
-def get_local_sync_path(local_sync_path, remote_sync_path, item_path):
-    item_path = item_path.replace(remote_sync_path, "", 1)
-    return os.path.normpath(local_sync_path + DROPBOX_SEP + item_path)
+def identify_file_type(filename):
+    file_extension = os.path.splitext(filename)[1][1:].lower()
+
+    if file_extension in VIDEO_EXT:
+        return "video"
+    elif file_extension in AUDIO_EXT:
+        return "audio"
+    elif file_extension in IMAGE_EXT:
+        return "image"
+    else:
+        return "other"
 
 
 def xor(w1, w2):

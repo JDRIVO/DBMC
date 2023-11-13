@@ -261,6 +261,7 @@ class SyncAccount:
                 self._refresh_token,
                 self._app_key,
                 self._app_secret,
+                self.account_name,
                 auto_connect=False,
             )
             connected, msg = self._client.connect()
