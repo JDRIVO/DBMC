@@ -105,6 +105,7 @@ class SyncFile(SyncObject):
             # if self._file_type == "video":
             self._client.save_strm(self._id, self._local_path)
             self.update_timestamp()
+            succeeded = True
 
         elif self._state == self.OBJECT_TO_UPLOAD:
             log_debug(f"Upload file: {self._local_path}")
