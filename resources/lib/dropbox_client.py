@@ -91,6 +91,7 @@ class KodiDropboxClient:
         self._refresh_token = refresh_token
         self._app_key = app_key
         self._app_secret = app_secret
+        self._account_name = account_name
 
         if cache:
             self._cache = cache

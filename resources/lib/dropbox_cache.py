@@ -19,7 +19,6 @@ from dropbox.files import (
 )
 
 from .utils import *
-from .constants import *
 
 
 class DropboxCache(StorageServer.StorageServer):
@@ -64,20 +63,6 @@ class DropboxCache(StorageServer.StorageServer):
 
         return self._data
 
-    @staticmethod
-    def identify_file_type(metadata):
-        filename = metadata.name
-        file_extension = os.path.splitext(filename)[1][1:].lower()
-
-        if file_extension in VIDEO_EXT:
-            return "video"
-        elif file_extension in AUDIO_EXT:
-            return "audio"
-        elif file_extension in IMAGE_EXT:
-            return "image"
-        else:
-            return "other"
-
     def sort_metadata(self, entries, cached_metadata=None):
 
         if not cached_metadata:
@@ -107,7 +92,7 @@ class DropboxCache(StorageServer.StorageServer):
                     del data["deleted"]["folders"][path]
 
             elif isinstance(metadata, FileMetadata):
-                file_type = self.identify_file_type(metadata)
+                file_type = identify_file_type(metadata.name)
                 data["files"][file_type][path] = metadata
 
                 if path in data["deleted"]["files"]:
