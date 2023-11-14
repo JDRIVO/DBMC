@@ -25,7 +25,7 @@ msgid "Amount of files to download concurrently"
 msgstr ""
 
 msgctxt "#30005"
-msgid ""
+msgid "Show sync notification"
 msgstr ""
 
 msgctxt "#30006"

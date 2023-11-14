@@ -43,6 +43,7 @@ class SyncObject:
         self._id = None
         self._name = None
         self._local_path = None
+        self.is_dir = False
         self._failure = False
         self._remote_present = True
         self._local_timestamp = 0

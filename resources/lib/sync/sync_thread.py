@@ -115,16 +115,21 @@ class SynchronizeThread(threading.Thread):
                     if self.stopped():
                         break
                     else:
-                        self.update_progress(item_number, items_total)
+
+                        if ADDON_SETTINGS.getBool("sync_notification"):
+                            self.update_progress(item_number, items_total)
+
                         synced = item.sync()
 
                         if synced:
                             item_number += 1
 
-                self.update_progress_finished(item_number, items_total)
+                if ADDON_SETTINGS.getBool("sync_notification"):
+                    self.update_progress_finished(item_number, items_total)
 
             # Store the new data
             self._sync_account.store_sync_data()
+            xbmc.executebuiltin(f"UpdateLibrary(video,{self._sync_account._sync_path})")
 
     def update_progress(self, handled, total):
         now = time.time()
