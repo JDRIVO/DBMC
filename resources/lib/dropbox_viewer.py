@@ -174,10 +174,7 @@ class DropboxViewer:
         list_item.setDateTime(metadata.server_modified.strftime("%Y-%m-%d %H:%M:%S"))
         list_item.setInfo(TYPES[media_type], {"size": metadata.size})
 
-        if self._enabled_sync and self._remote_sync_path in path:
-            # Use the synchronized location for url
-            url = get_local_sync_path(self._local_sync_path, self._remote_sync_path, path)
-        elif media_type in ("image", "video", "audio"):
+        if media_type in ("image", "video", "audio"):
             list_item.setArt({"thumb": self._loader.get_thumbnail(path)})
 
             if self._use_steaming_urls and media_type in ("video", "audio"):
