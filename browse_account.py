@@ -215,7 +215,7 @@ def run(params):
             "{}\n\n[B][COLOR blue]http://{}:{}/register[/COLOR][/B]".format(
                 LANGUAGE_STRING(30001),
                 address,
-                ADDON_SETTINGS.getInt("registration_server_port"),
+                ADDON.getSettingInt("registration_server_port"),
             )
         )
 

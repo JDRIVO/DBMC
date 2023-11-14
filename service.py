@@ -9,7 +9,7 @@ if __name__ == "__main__":
     monitor = xbmc.Monitor()
     sync = DropboxSynchronizer()
     sync.start()
-    port = ADDON_SETTINGS.getInt("registration_server_port")
+    port = ADDON.getSettingInt("registration_server_port")
 
     try:
         server = ThreadedHTTPServer(("", port), RequestHandler)

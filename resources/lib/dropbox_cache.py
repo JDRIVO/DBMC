@@ -170,7 +170,7 @@ class FileLoader(threading.Thread):
         self._file_list = queue.Queue() # Thread safe
         self._stop_event = threading.Event()
         self._thumb_batch_total = 25
-        self._file_batch_total = ADDON_SETTINGS.getInt("files_per_batch")
+        self._file_batch_total = ADDON.getSettingInt("files_per_batch")
 
     def stop(self):
         self._stop_event.set()

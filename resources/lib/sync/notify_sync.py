@@ -149,7 +149,7 @@ class NotifySyncClient:
 
     def send_notification(self, account_name, notification, data=None):
         s = None
-        used_port = ADDON_SETTINGS.getInt("notify_server_port")
+        used_port = ADDON.getSettingInt("notify_server_port")
 
         if used_port > 0:
 

@@ -116,7 +116,7 @@ class SynchronizeThread(threading.Thread):
                         break
                     else:
 
-                        if ADDON_SETTINGS.getBool("sync_notification"):
+                        if ADDON.getSettingBool("sync_notification"):
                             self.update_progress(item_number, items_total)
 
                         synced = item.sync()
@@ -124,7 +124,7 @@ class SynchronizeThread(threading.Thread):
                         if synced:
                             item_number += 1
 
-                if ADDON_SETTINGS.getBool("sync_notification"):
+                if ADDON.getSettingBool("sync_notification"):
                     self.update_progress_finished(item_number, items_total)
 
             # Store the new data

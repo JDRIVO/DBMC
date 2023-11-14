@@ -57,8 +57,8 @@ class DropboxViewer:
             self._account_name,
             self._cache,
         )
-        self._filter_files = ADDON_SETTINGS.getBool("file_filter")
-        self._use_steaming_urls = ADDON_SETTINGS.getBool("stream_media")
+        self._filter_files = ADDON.getSettingBool("file_filter")
+        self._use_steaming_urls = ADDON.getSettingBool("stream_media")
         self._enabled_sync = self._account_settings.synchronisation
         self._local_sync_path = self._account_settings.sync_path
         self._remote_sync_path = self._account_settings.remote_path

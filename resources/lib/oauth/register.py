@@ -26,7 +26,7 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
         HTTPServer.__init__(self, *args, **kwargs)
         monitor = xbmc.Monitor()
 
-        while ADDON_SETTINGS.getInt("registration_server_port") != self.server_port and not monitor.abortRequested():
+        while ADDON.getSettingInt("registration_server_port") != self.server_port and not monitor.abortRequested():
             ADDON.setSettingInt("registration_server_port", self.server_port)
             xbmc.sleep(100)
 

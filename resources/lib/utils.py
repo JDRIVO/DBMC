@@ -52,7 +52,7 @@ def parse_argv():
 
 
 def get_cache_path(account_name):
-    data_path = ADDON_SETTINGS.getString("cache_path")
+    data_path = ADDON.getSetting("cache_path")
 
     # Use user defined location?
     if not data_path:
