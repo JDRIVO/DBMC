@@ -34,7 +34,6 @@ class SyncFile(SyncObject):
         log_debug(f"Create SyncFile: {path}")
         super().__init__(path, client)
         self._file_type = None
-        self.is_dir = False
 
     def in_sync(self):
 
