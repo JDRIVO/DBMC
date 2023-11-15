@@ -84,7 +84,7 @@ class SyncFolder(SyncObject):
         if not child_path in self._children:
 
             # Create the child
-            if metadata.__class__.__name__ == "FolderMetadata":
+            if metadata.is_dir:
                 child = SyncFolder(child_path, self._client)
             else:
                 child = SyncFile(child_path, self._client)
