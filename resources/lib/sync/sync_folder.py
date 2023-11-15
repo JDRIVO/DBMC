@@ -88,11 +88,11 @@ class SyncFolder(SyncObject):
         if not child_path in self._children:
 
             # Create the child
-            if metadata.__class__.__name__ == "FolderMetadata":
+            if metadata.is_dir:
                 child = SyncFolder(child_path, self._client)
             else:
 
-                file_type = identify_file_type(child_path)
+                file_type = identify_file_type(metadata.name)
 
                 if file_type == "video":
                     child = SyncFile(child_path, self._client)

@@ -33,7 +33,6 @@ class SyncFile(SyncObject):
     def __init__( self, path, client):
         log_debug(f"Create SyncFile: {path}")
         super().__init__(path, client)
-        self._file_type = None
 
     def in_sync(self):
 
@@ -101,7 +100,6 @@ class SyncFile(SyncObject):
             # if succeeded:
                 # self.update_timestamp()
 
-            # if self._file_type == "video":
             self._client.save_strm(self._id, self._local_path)
             self.update_timestamp()
             succeeded = True
@@ -143,7 +141,6 @@ class SyncFile(SyncObject):
         return succeeded
 
     def set_item_info(self, path, metadata):
-        self._file_type = identify_file_type(metadata.name)
 
         if path == self.path:
             super().set_item_info(metadata)
