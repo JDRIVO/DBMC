@@ -7,12 +7,13 @@ import xbmcvfs
 import xbmcaddon
 
 from .constants import *
+from .settings import Settings
 
 
 ADDON_ID        = "plugin.dbmc"
 ADDON_URL       = f"plugin://{ADDON_ID}/"
 ADDON           = xbmcaddon.Addon(ADDON_ID)
-ADDON_SETTINGS  = ADDON.getSettings()
+ADDON_SETTINGS  = Settings(ADDON)
 ADDON_NAME      = ADDON.getAddonInfo("name")
 ADDON_PATH      = ADDON.getAddonInfo("path")
 ADDON_ICON      = ADDON.getAddonInfo("icon")
