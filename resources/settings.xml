@@ -38,6 +38,16 @@
                         <popup>false</popup>
                     </control>
                 </setting>
+                <setting id="sync_notification" type="boolean" label="30005" help="">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="library_scan_dialog" type="boolean" label="30006" help="">
+                    <level>0</level>
+                    <default>true</default>
+                    <control type="toggle"/>
+                </setting>
                 <setting id="registration_server_port" type="integer" label="" help="">
                     <level>0</level>
                     <default>0</default>
@@ -57,11 +67,6 @@
                         </dependency>
                     </dependencies>
                     <control type="edit" format="integer"/>
-                </setting>
-                <setting id="sync_notification" type="boolean" label="30005" help="">
-                    <level>0</level>
-                    <default>true</default>
-                    <control type="toggle"/>
                 </setting>
             </group>
         </category>

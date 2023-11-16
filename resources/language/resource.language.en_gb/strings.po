@@ -29,7 +29,7 @@ msgid "Show sync notification"
 msgstr ""
 
 msgctxt "#30006"
-msgid ""
+msgid "Show library scan dialog"
 msgstr ""
 
 msgctxt "#30007"

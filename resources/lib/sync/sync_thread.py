@@ -134,7 +134,8 @@ class SynchronizeThread(threading.Thread):
 
             # Store the new data
             self._sync_account.store_sync_data()
-            xbmc.executebuiltin(f"UpdateLibrary(video,{self._sync_account._sync_path})")
+            sync_path = escape_param(self._sync_account._sync_path)
+            xbmc.executebuiltin(f"UpdateLibrary(video,{sync_path},{ADDON.getSetting('library_scan_dialog')})")
 
     def update_progress(self, handled, total):
         now = time.time()

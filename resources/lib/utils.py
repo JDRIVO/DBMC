@@ -91,6 +91,11 @@ def identify_file_type(filename):
         return "other"
 
 
+def escape_param(s):
+    escaped = s.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
+
+
 def xor(w1, w2):
     from itertools import cycle
     # xor two strings together with the length of the first string limiting
